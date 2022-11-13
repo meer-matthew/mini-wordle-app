@@ -58,25 +58,23 @@ export const Tile = styled.div`
   font-weight: bold;
   line-height: 3.2rem;
   text-transform: uppercase;
+
+  ${({ hint }) => {
+    if (hint === "green") {
+      return `background-color: #6aaa64;`;
+    }
+    if (hint === "yellow") {
+      return `background-color: #b59f3b;`;
+    }
+    if (hint === "grey") {
+      return `background-color: #c1c1c1;`;
+    }
+  }}
+
+  user-select: none;
 `;
 
-export const KeyboardSection = styled.section`
-  height: 200px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-export const KeyboardRow = styled.div`
-  width: 100%;
-  margin: 0 auto 8px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-`;
-
-export const KeyboardButton = styled.button`
+export const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -98,4 +96,35 @@ export const KeyboardButton = styled.button`
   &:last-of-type {
     margin: 0;
   }
+`;
+
+export const ShareModal = styled.div`
+  font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+`;
+
+export const ShareButton = styled.button`
+  font-size: 18px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: 2px solid #3a3a3c;
+  transition: background-color 0.2s ease-in;
+  &:hover {
+    background-color: #818384;
+  }
+`;
+
+export const Row = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 16px auto;
+`;
+
+export const Heading = styled.h2`
+  border-bottom: 1px solid #3a3a3c;
+  padding-bottom: 8px;
+  font-weight: 700;
+  font-size: 3.6rem;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
 `;
