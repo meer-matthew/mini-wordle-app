@@ -19,7 +19,7 @@ export default function MainPage() {
   const guessLength = 5;
 
   let wordIndex = useRef(0);
-  let nextRound = useRef(0);
+  let rounds = useRef(0);
 
   const [guess, setGuess] = useState({
     0: Array.from({ length: guessLength }).fill(),
@@ -28,6 +28,7 @@ export default function MainPage() {
     3: Array.from({ length: guessLength }).fill(),
     4: Array.from({ length: guessLength }).fill(),
   });
+  console.log(guess)
 
   const [mark, setMark] = useState({
     0: Array.from({ length: guessLength }).fill(),
@@ -48,7 +49,7 @@ export default function MainPage() {
   };
 
   const enterGuess = (pressedKey) => {
-    if (pressedKey === "enter" && !guess[nextRound.current].includes("")) {
+    if (pressedKey === "enter" && !guess[rounds.current].includes("")) {
       submitGuess();
     } else if (pressedKey === "backspace") {
       eraseKey();
@@ -59,7 +60,7 @@ export default function MainPage() {
 
   const eraseKey = () => {
     const _wordIndex = wordIndex.current;
-    const _round = nextRound.current;
+    const _round = rounds.current;
 
     if (_wordIndex !== 0) {
       setGuess((prev) => {
@@ -76,7 +77,7 @@ export default function MainPage() {
 
   const publishKey = (selectedKey) => {
     const _wordIndex = wordIndex.current;
-    const _round = nextRound.current;
+    const _round = rounds.current;
     if (_wordIndex < guessLength) {
       setGuess((prev) => {
         const newGuess = { ...prev };
@@ -91,7 +92,7 @@ export default function MainPage() {
   };
 
   const submitGuess = () => {
-    const _round = nextRound.current;
+    const _round = rounds.current;
     const updatedMarks = {
       ...mark,
     };
@@ -135,19 +136,11 @@ export default function MainPage() {
       });
     }
     setMark(updatedMarks);
-    nextRound.current = _round + 1;
+    rounds.current = _round + 1;
     wordIndex.current = 0;
   };
 
-  const getDayOfYear = () => {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 0);
-    const diff = now - start;
-    const oneDay = 1000 * 60 * 60 * 24;
-    return Math.floor(diff / oneDay);
-  };
-
-  const copyMarkers = () => {
+  const copyMarks = () => {
     const gameDate = new Date();
     const formattedDate = gameDate.toLocaleDateString();
     let shareText = `Wordle ${formattedDate}`;
@@ -172,7 +165,7 @@ export default function MainPage() {
 
         return "";
       });
-
+      console.log(amountOfGuesses)
     shareText += ` ${amountOfGuesses.length}/5\n${shareGuesses}`;
 
     navigator.clipboard.writeText(shareText);
@@ -230,7 +223,7 @@ export default function MainPage() {
             <Heading>{title}</Heading>
             <Row>
               <h3>Show off your score</h3>
-              <ShareButton onClick={copyMarkers} disabled={isShared}>
+              <ShareButton onClick={copyMarks} disabled={isShared}>
                 {isShared ? "Copied" : "Share"}
               </ShareButton>
             </Row>
